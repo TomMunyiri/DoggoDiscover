@@ -1,4 +1,4 @@
-package com.tommunyiri.doggo.discover.ui.theme
+package com.tommunyiri.doggo.discover.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

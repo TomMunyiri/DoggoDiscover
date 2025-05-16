@@ -1,4 +1,4 @@
-package com.tommunyiri.doggo.discover.ui.theme
+package com.tommunyiri.doggo.discover.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

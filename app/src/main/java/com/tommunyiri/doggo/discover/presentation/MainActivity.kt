@@ -1,4 +1,4 @@
-package com.tommunyiri.doggo.discover
+package com.tommunyiri.doggo.discover.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,19 +11,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.tommunyiri.doggo.discover.ui.theme.DoggoDiscoverTheme
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.tommunyiri.doggo.discover.presentation.ui.theme.DoggoDiscoverTheme
+import org.koin.androidx.compose.KoinAndroidContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             DoggoDiscoverTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                KoinAndroidContext {
+                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                        Greeting(
+                            name = "Android",
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                    }
                 }
             }
         }

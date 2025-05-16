@@ -1,12 +1,36 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    // needed for non-primitive classes
+    id("kotlin-parcelize")
+    alias(libs.plugins.ktlint)
+    alias(libs.plugins.room)
 }
+
+/*tasks.check {
+    dependsOn("ktlintFormat")
+    dependsOn("ktlintCheck")
+}
+
+ktlint {
+    android = true
+    ignoreFailures = false
+    reporters {
+        reporter(ReporterType.JSON)
+    }
+}*/
 
 android {
     namespace = "com.tommunyiri.doggo.discover"
     compileSdk = 35
+
+    val properties = Properties()
+    properties.load(rootProject.file("local.properties").inputStream())
 
     defaultConfig {
         applicationId = "com.tommunyiri.doggo.discover"
@@ -16,6 +40,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+        buildConfigField("String", "DOG_API_KEY", properties.getProperty("DOG_API_KEY"))
     }
 
     buildTypes {
@@ -28,14 +56,23 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    room {
+        schemaDirectory("$projectDir/schemas")
     }
 }
 
@@ -56,4 +93,27 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    // coroutines
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.android)
+    testImplementation(libs.kotlinx.coroutines.test)
+    // navigation
+    implementation(libs.androidx.navigation.compose)
+    // koin
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.android)
+    implementation(libs.koin.android.test)
+    implementation(libs.koin.test.junit4)
+    // lottie
+    implementation(libs.lottie.compose)
+    implementation(libs.kotlinx.serialization.json)
+    // material extended icons
+    implementation(libs.androidx.material.icons.extended)
+    // room
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    testImplementation(libs.room.testing)
+    // splash screen api
+    implementation(libs.splash.screen)
 }
