@@ -3,7 +3,6 @@ package com.tommunyiri.doggo.discover.core.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.util.Log
 
 class NetworkHelper(private val context: Context) {

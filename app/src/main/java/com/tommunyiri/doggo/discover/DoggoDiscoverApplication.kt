@@ -13,7 +13,7 @@ class DoggoDiscoverApplication : Application() {
             androidLogger()
             androidContext(this@DoggoDiscoverApplication)
             modules(
-                AppModule.module
+                AppModule.module,
             )
         }
     }

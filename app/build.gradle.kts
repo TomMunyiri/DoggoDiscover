@@ -1,3 +1,4 @@
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import java.util.Properties
 
 plugins {
@@ -12,7 +13,7 @@ plugins {
     alias(libs.plugins.room)
 }
 
-/*tasks.check {
+tasks.check {
     dependsOn("ktlintFormat")
     dependsOn("ktlintCheck")
 }
@@ -23,7 +24,7 @@ ktlint {
     reporters {
         reporter(ReporterType.JSON)
     }
-}*/
+}
 
 android {
     namespace = "com.tommunyiri.doggo.discover"
@@ -51,7 +52,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
