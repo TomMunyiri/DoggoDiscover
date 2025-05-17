@@ -46,6 +46,7 @@ android {
         }
         buildConfigField("String", "DOG_API_KEY", properties.getProperty("DOG_API_KEY"))
         buildConfigField("String", "DOG_API_BASE_URL", properties.getProperty("DOG_API_BASE_URL"))
+        buildConfigField("String", "DOG_IMAGE_URL", properties.getProperty("DOG_IMAGE_URL"))
     }
 
     buildTypes {
@@ -123,4 +124,6 @@ dependencies {
     // chucker
     debugImplementation(libs.chucker)
     releaseImplementation(libs.chucker.no.op)
+    // coil
+    implementation(libs.coil.compose)
 }
