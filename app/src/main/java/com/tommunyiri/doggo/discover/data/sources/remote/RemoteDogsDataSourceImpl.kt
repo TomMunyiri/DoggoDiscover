@@ -1,11 +1,11 @@
 package com.tommunyiri.doggo.discover.data.sources.remote
 
+import com.tommunyiri.doggo.discover.core.ApiException
 import com.tommunyiri.doggo.discover.domain.model.NetworkDogInfo
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import java.io.IOException
 
 class RemoteDogsDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher,
@@ -19,7 +19,7 @@ class RemoteDogsDataSourceImpl(
             } ?: emit(emptyList())
         } else {
             // Handle error case
-            throw IOException("Error fetching dogs: ${response.code()} ${response.message()}")
+            throw ApiException(statusCode = response.code(), statusMessage = response.message())
         }
     }.flowOn(ioDispatcher)
 }

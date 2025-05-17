@@ -2,7 +2,9 @@ package com.tommunyiri.doggo.discover.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tommunyiri.doggo.discover.core.Constants
+import com.tommunyiri.doggo.discover.core.INITIAL_LIST_LIMIT
+import com.tommunyiri.doggo.discover.core.INITIAL_LIST_PAGE
+import com.tommunyiri.doggo.discover.core.handleException
 import com.tommunyiri.doggo.discover.core.utils.Result
 import com.tommunyiri.doggo.discover.core.utils.asResult
 import com.tommunyiri.doggo.discover.domain.model.DogInfo
@@ -18,11 +20,12 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
     private val _homeScreenState = MutableStateFlow(HomeScreenUIState())
     val homeScreenState: StateFlow<HomeScreenUIState> = _homeScreenState.asStateFlow()
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        val (title, message) = exception.handleException()
         _homeScreenState.update {
             it.copy(
                 isLoading = false,
                 isLoadingMore = false,
-                error = exception.localizedMessage
+                error = Error(title, message)
             )
         }
     }
@@ -45,8 +48,8 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
 
         viewModelScope.launch(exceptionHandler) {
             val page =
-                if (isFirstLoad) Constants.INITIAL_LIST_PAGE else homeScreenState.value.currentPage + 1
-            val limit = Constants.INITIAL_LIST_LIMIT
+                if (isFirstLoad) INITIAL_LIST_PAGE else homeScreenState.value.currentPage + 1
+            val limit = INITIAL_LIST_LIMIT
 
             getDogsUseCase.invoke(page = page, limit = limit).asResult().collect { result ->
                 when (result) {
@@ -64,12 +67,15 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
                         }
                     }
 
-                    is Result.Error -> _homeScreenState.update {
-                        it.copy(
-                            isLoading = false,
-                            isLoadingMore = false,
-                            error = result.error,
-                        )
+                    is Result.Error -> {
+                        val (title, message) = result.error.handleException()
+                        _homeScreenState.update {
+                            it.copy(
+                                isLoading = false,
+                                isLoadingMore = false,
+                                error = Error(title, message),
+                            )
+                        }
                     }
                 }
             }
@@ -84,8 +90,10 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
 data class HomeScreenUIState(
     val dogsList: List<DogInfo> = emptyList(),
     val isLoading: Boolean = false,
-    val error: String? = null,
     val isLoadingMore: Boolean = false,
     val canLoadMore: Boolean = true,
-    val currentPage: Int = Constants.INITIAL_LIST_PAGE
+    val currentPage: Int = INITIAL_LIST_PAGE,
+    val error: Error? = null
 )
+
+data class Error(val errorTitle: Int, val errorMessage: Any)

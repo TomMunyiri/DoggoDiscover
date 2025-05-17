@@ -17,4 +17,11 @@
     <string name="pounds">pounds</string>
     <string name="cms">cms</string>
     <string name="inches">inches</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="api_error">Unable to complete your request. Please try again later.</string>
+    <string name="not_authorized">Not authorized</string>
+    <string name="network_problem">Network problem detected</string>
+    <string name="check_internet">Please connect to an active internet connection and try again</string>
+    <string name="lets_try_again">Let’s try again</string>
+    <string name="bad_request">Bad request. Please try again later</string>
 </resources>

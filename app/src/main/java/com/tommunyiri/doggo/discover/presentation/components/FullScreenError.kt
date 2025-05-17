@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FullScreenError(errorTitle: String, errorDesc: String = "", imageVector: ImageVector) {
+fun FullScreenError(errorTitle: String, errorDesc: String, imageVector: ImageVector) {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         Icon(

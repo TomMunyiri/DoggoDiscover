@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.map
 
 sealed class Result<out T> {
     data class Success<out T>(val data: T) : Result<T>()
-    data class Error(val error: String) : Result<Nothing>()
+    data class Error(val error: Throwable) : Result<Nothing>()
 }
 
 fun <T> Flow<T>.asResult(): Flow<Result<T>> {
@@ -14,5 +14,5 @@ fun <T> Flow<T>.asResult(): Flow<Result<T>> {
         .map<T, Result<T>> {
             Result.Success(it)
         }
-        .catch { emit(Result.Error(it.message.toString())) }
+        .catch { emit(Result.Error(it)) }
 }
