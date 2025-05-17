@@ -126,4 +126,6 @@ dependencies {
     releaseImplementation(libs.chucker.no.op)
     // coil
     implementation(libs.coil.compose)
+    // testing
+    testImplementation(libs.bundles.testing)
 }

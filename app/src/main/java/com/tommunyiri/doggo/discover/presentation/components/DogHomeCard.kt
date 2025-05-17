@@ -21,6 +21,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -41,9 +42,10 @@ fun DogHomeCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clickable { onDogClick(dogInfo) },
+            .clickable { onDogClick(dogInfo) }
+            .testTag("DogItemCard"),
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Box {
             val imageUrl = remember { mutableStateOf("${BuildConfig.DOG_IMAGE_URL}${dogInfo.referenceImageId}.jpg") }

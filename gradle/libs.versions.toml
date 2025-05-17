@@ -23,7 +23,10 @@ retrofit = "3.0.0"
 retrofitSerialiazationConverter = "1.0.0"
 okhttp3 = "4.12.0"
 chucker = "4.0.0"
-coil-compose = "2.5.0"
+coil-compose = "2.6.0"
+mockWebServer = "5.0.0-alpha.2"
+truth = "1.4.2"
+mockk = "1.13.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -70,6 +73,10 @@ chucker = { module = "com.github.chuckerteam.chucker:library", version.ref = "ch
 chucker-no-op = { module = "com.github.chuckerteam.chucker:library-no-op", version.ref = "chucker" }
 # coil compose
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil-compose" }
+# testing
+test-mock-webserver = { module = "com.squareup.okhttp3:mockwebserver", version.ref = "mockWebServer" }
+test-truth = { module = "com.google.truth:truth", version.ref = "truth" }
+test-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -83,4 +90,5 @@ kotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = 
 
 [bundles]
 networking = ["retrofit", "retrofit-serialization", "okhttp3"]
+testing = ["test-mock-webserver", "test-truth", "test-mockk"]
 
