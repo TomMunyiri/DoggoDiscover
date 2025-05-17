@@ -13,10 +13,11 @@ class DogRepositoryImpl(
     private val remoteDogsDataSource: RemoteDogsDataSource,
     private val ioDispatcher: CoroutineDispatcher
 ) : DogRepository {
-    override suspend fun getDogs(): Flow<List<DogInfo>> = withContext(ioDispatcher) {
-        val dogInfoListMapper = DogInfoListMapper()
-        remoteDogsDataSource.getDogs().map {
-            dogInfoListMapper.transformToDomain(it)
+    override suspend fun getDogs(page: Int, limit: Int): Flow<List<DogInfo>> =
+        withContext(ioDispatcher) {
+            val dogInfoListMapper = DogInfoListMapper()
+            remoteDogsDataSource.getDogs(page, limit).map {
+                dogInfoListMapper.transformToDomain(it)
+            }
         }
-    }
 }

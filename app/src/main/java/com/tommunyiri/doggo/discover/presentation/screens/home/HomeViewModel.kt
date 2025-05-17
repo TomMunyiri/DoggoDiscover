@@ -2,6 +2,7 @@ package com.tommunyiri.doggo.discover.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tommunyiri.doggo.discover.core.Constants
 import com.tommunyiri.doggo.discover.core.utils.Result
 import com.tommunyiri.doggo.discover.core.utils.asResult
 import com.tommunyiri.doggo.discover.domain.model.DogInfo
@@ -17,35 +18,74 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
     private val _homeScreenState = MutableStateFlow(HomeScreenUIState())
     val homeScreenState: StateFlow<HomeScreenUIState> = _homeScreenState.asStateFlow()
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        _homeScreenState.update { it.copy(isLoading = false, error = exception.localizedMessage) }
+        _homeScreenState.update {
+            it.copy(
+                isLoading = false,
+                isLoadingMore = false,
+                error = exception.localizedMessage
+            )
+        }
     }
 
     init {
         getDogs()
     }
 
-    private fun getDogs() {
-        _homeScreenState.update { it.copy(isLoading = true) }
+    private fun getDogs(loadMore: Boolean = false) {
+        if (loadMore && (!homeScreenState.value.canLoadMore || homeScreenState.value.isLoadingMore)) {
+            return
+        }
+
+        val isFirstLoad = !loadMore
+        if (isFirstLoad) {
+            _homeScreenState.update { it.copy(isLoading = true) }
+        } else {
+            _homeScreenState.update { it.copy(isLoadingMore = true) }
+        }
+
         viewModelScope.launch(exceptionHandler) {
-            getDogsUseCase.invoke().asResult().collect { result ->
+            val page =
+                if (isFirstLoad) Constants.INITIAL_LIST_PAGE else homeScreenState.value.currentPage + 1
+            val limit = Constants.INITIAL_LIST_LIMIT
+
+            getDogsUseCase.invoke(page = page, limit = limit).asResult().collect { result ->
                 when (result) {
-                    is Result.Success -> _homeScreenState.update {
-                        it.copy(dogsList = result.data, isLoading = false, error = null)
+                    is Result.Success -> {
+                        val newDogs = result.data
+                        _homeScreenState.update { currentState ->
+                            currentState.copy(
+                                dogsList = if (isFirstLoad) newDogs else currentState.dogsList + newDogs,
+                                isLoading = false,
+                                isLoadingMore = false,
+                                error = null,
+                                currentPage = page,
+                                canLoadMore = newDogs.size >= limit
+                            )
+                        }
                     }
 
                     is Result.Error -> _homeScreenState.update {
                         it.copy(
-                            dogsList = null, isLoading = false, error = result.error,
+                            isLoading = false,
+                            isLoadingMore = false,
+                            error = result.error,
                         )
                     }
                 }
             }
         }
     }
+
+    fun loadMoreDogs() {
+        getDogs(loadMore = true)
+    }
 }
 
 data class HomeScreenUIState(
-    val dogsList: List<DogInfo>? = null,
+    val dogsList: List<DogInfo> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null,
+    val isLoadingMore: Boolean = false,
+    val canLoadMore: Boolean = true,
+    val currentPage: Int = Constants.INITIAL_LIST_PAGE
 )

@@ -4,5 +4,5 @@ import com.tommunyiri.doggo.discover.domain.model.DogInfo
 import kotlinx.coroutines.flow.Flow
 
 interface DogRepository {
-    suspend fun getDogs(): Flow<List<DogInfo>>
+    suspend fun getDogs(page: Int, limit: Int): Flow<List<DogInfo>>
 }
