@@ -45,6 +45,7 @@ android {
             useSupportLibrary = true
         }
         buildConfigField("String", "DOG_API_KEY", properties.getProperty("DOG_API_KEY"))
+        buildConfigField("String", "DOG_API_BASE_URL", properties.getProperty("DOG_API_BASE_URL"))
     }
 
     buildTypes {
@@ -117,4 +118,9 @@ dependencies {
     testImplementation(libs.room.testing)
     // splash screen api
     implementation(libs.splash.screen)
+    // networking
+    implementation(libs.bundles.networking)
+    // chucker
+    debugImplementation(libs.chucker)
+    releaseImplementation(libs.chucker.no.op)
 }

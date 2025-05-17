@@ -9,11 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.tommunyiri.doggo.discover.presentation.screens.home.HomeScreen
+import com.tommunyiri.doggo.discover.presentation.screens.home.HomeViewModel
 import com.tommunyiri.doggo.discover.presentation.ui.theme.DoggoDiscoverTheme
 import org.koin.androidx.compose.KoinAndroidContext
+import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,10 +27,7 @@ class MainActivity : ComponentActivity() {
             DoggoDiscoverTheme {
                 KoinAndroidContext {
                     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        Greeting(
-                            name = "Android",
-                            modifier = Modifier.padding(innerPadding),
-                        )
+                        HomeScreen()
                     }
                 }
             }
@@ -35,21 +35,3 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(
-    name: String,
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DoggoDiscoverTheme {
-        Greeting("Android")
-    }
-}
