@@ -49,6 +49,10 @@ fun HomeScreen(
 
     val context = LocalContext.current
 
+    LaunchedEffect(Unit) {
+        homeViewModel.getDogs()
+    }
+
     // Load more items when user is close to the bottom
     LaunchedEffect(shouldLoadMore) {
         if (shouldLoadMore && !homeScreenState.isLoading && !homeScreenState.isLoadingMore && homeScreenState.canLoadMore) {

@@ -30,11 +30,7 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
         }
     }
 
-    init {
-        getDogs()
-    }
-
-    private fun getDogs(loadMore: Boolean = false) {
+    fun getDogs(loadMore: Boolean = false) {
         if (loadMore && (!homeScreenState.value.canLoadMore || homeScreenState.value.isLoadingMore)) {
             return
         }
