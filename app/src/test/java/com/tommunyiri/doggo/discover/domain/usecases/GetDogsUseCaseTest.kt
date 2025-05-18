@@ -23,50 +23,53 @@ class GetDogsUseCaseTest {
     }
 
     @Test
-    fun `invoke returns dogs list from repository`() = runTest {
-        // Given
-        val page = 0
-        val limit = 20
-        val expectedDogs = fakeDogList
+    fun `invoke returns dogs list from repository`() =
+        runTest {
+            // Given
+            val page = 0
+            val limit = 20
+            val expectedDogs = fakeDogList
 
-        coEvery { dogRepository.getDogs(page, limit) } returns flowOf(expectedDogs)
+            coEvery { dogRepository.getDogs(page, limit) } returns flowOf(expectedDogs)
 
-        // When
-        val result = getDogsUseCase.invoke(page, limit).first()
+            // When
+            val result = getDogsUseCase.invoke(page, limit).first()
 
-        // Then
-        assertEquals(expectedDogs, result)
-    }
-
-    @Test
-    fun `invoke returns empty list when repository returns empty`() = runTest {
-        // Given
-        val page = 0
-        val limit = 20
-        val expectedDogs = emptyList<DogInfo>()
-
-        coEvery { dogRepository.getDogs(page, limit) } returns flowOf(expectedDogs)
-
-        // When
-        val result = getDogsUseCase.invoke(page, limit).first()
-
-        // Then
-        assertEquals(expectedDogs, result)
-    }
+            // Then
+            assertEquals(expectedDogs, result)
+        }
 
     @Test
-    fun `invoke passes correct pagination parameters to repository`() = runTest {
-        // Given
-        val page = 2
-        val limit = 15
-        val expectedDogs = emptyList<DogInfo>()
+    fun `invoke returns empty list when repository returns empty`() =
+        runTest {
+            // Given
+            val page = 0
+            val limit = 20
+            val expectedDogs = emptyList<DogInfo>()
 
-        coEvery { dogRepository.getDogs(page, limit) } returns flowOf(expectedDogs)
+            coEvery { dogRepository.getDogs(page, limit) } returns flowOf(expectedDogs)
 
-        // When
-        getDogsUseCase.invoke(page, limit).first()
+            // When
+            val result = getDogsUseCase.invoke(page, limit).first()
 
-        // Then
-        coVerify(exactly = 1) { dogRepository.getDogs(page, limit) }
-    }
+            // Then
+            assertEquals(expectedDogs, result)
+        }
+
+    @Test
+    fun `invoke passes correct pagination parameters to repository`() =
+        runTest {
+            // Given
+            val page = 2
+            val limit = 15
+            val expectedDogs = emptyList<DogInfo>()
+
+            coEvery { dogRepository.getDogs(page, limit) } returns flowOf(expectedDogs)
+
+            // When
+            getDogsUseCase.invoke(page, limit).first()
+
+            // Then
+            coVerify(exactly = 1) { dogRepository.getDogs(page, limit) }
+        }
 }

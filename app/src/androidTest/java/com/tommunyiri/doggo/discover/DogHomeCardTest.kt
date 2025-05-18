@@ -15,22 +15,23 @@ class DogHomeCardTest {
     @Test
     fun testDogHomeCard() {
         with(composeTestRule) {
-            val dogInfo = DogInfo(
-                bredFor = "test",
-                breedGroup = "",
-                description = "",
-                imperialHeight = "12",
-                metricHeight = "13",
-                history = "",
-                id = 123,
-                lifeSpan = "12 years",
-                name = "German Shepherd",
-                origin = "Kenya",
-                referenceImageId = "HkC31gcNm",
-                temperament = "friendly",
-                imperialWeight = "12-14",
-                metricWeight = "13-16"
-            )
+            val dogInfo =
+                DogInfo(
+                    bredFor = "test",
+                    breedGroup = "",
+                    description = "",
+                    imperialHeight = "12",
+                    metricHeight = "13",
+                    history = "",
+                    id = 123,
+                    lifeSpan = "12 years",
+                    name = "German Shepherd",
+                    origin = "Kenya",
+                    referenceImageId = "HkC31gcNm",
+                    temperament = "friendly",
+                    imperialWeight = "12-14",
+                    metricWeight = "13-16",
+                )
             setContent {
                 DogHomeCard(dogInfo = dogInfo)
             }

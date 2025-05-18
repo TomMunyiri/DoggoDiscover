@@ -19,15 +19,20 @@ import kotlinx.coroutines.launch
 class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
     private val _homeScreenState = MutableStateFlow(HomeScreenUIState())
     val homeScreenState: StateFlow<HomeScreenUIState> = _homeScreenState.asStateFlow()
-    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
-        val (title, message) = exception.handleException()
-        _homeScreenState.update {
-            it.copy(
-                isLoading = false,
-                isLoadingMore = false,
-                error = Error(title, message)
-            )
+    private val exceptionHandler =
+        CoroutineExceptionHandler { _, exception ->
+            val (title, message) = exception.handleException()
+            _homeScreenState.update {
+                it.copy(
+                    isLoading = false,
+                    isLoadingMore = false,
+                    error = Error(title, message),
+                )
+            }
         }
+
+    init {
+        getDogs()
     }
 
     fun getDogs(loadMore: Boolean = false) {
@@ -58,7 +63,7 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
                                 isLoadingMore = false,
                                 error = null,
                                 currentPage = page,
-                                canLoadMore = newDogs.size >= limit
+                                canLoadMore = newDogs.size >= limit,
                             )
                         }
                     }
@@ -89,7 +94,7 @@ data class HomeScreenUIState(
     val isLoadingMore: Boolean = false,
     val canLoadMore: Boolean = true,
     val currentPage: Int = INITIAL_LIST_PAGE,
-    val error: Error? = null
+    val error: Error? = null,
 )
 
 data class Error(val errorTitle: Int, val errorMessage: Any)

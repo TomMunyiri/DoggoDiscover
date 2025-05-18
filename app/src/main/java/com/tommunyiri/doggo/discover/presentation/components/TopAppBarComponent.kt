@@ -21,7 +21,7 @@ import com.tommunyiri.doggo.discover.R
 fun TopAppBarComponent(
     title: String,
     onBackButtonClick: () -> Unit,
-    actions: @Composable RowScope.() -> Unit = {}
+    actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
         title = { Text(title) },
@@ -33,6 +33,6 @@ fun TopAppBarComponent(
                 )
             }
         },
-        actions = actions
+        actions = actions,
     )
 }

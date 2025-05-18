@@ -12,7 +12,6 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
-
 object HomeModule {
     val module =
         module {
@@ -20,14 +19,14 @@ object HomeModule {
             single<RemoteDogsDataSource> {
                 RemoteDogsDataSourceImpl(
                     ioDispatcher = get(IoDispatcher),
-                    dogsApiService = get()
+                    dogsApiService = get(),
                 )
             }
             viewModelOf(::HomeViewModel)
             single<DogRepository> {
                 DogRepositoryImpl(
                     remoteDogsDataSource = get(),
-                    ioDispatcher = get(IoDispatcher)
+                    ioDispatcher = get(IoDispatcher),
                 )
             }
             singleOf(::GetDogsUseCase)

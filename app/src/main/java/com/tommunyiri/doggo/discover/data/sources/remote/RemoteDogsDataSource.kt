@@ -4,5 +4,8 @@ import com.tommunyiri.doggo.discover.domain.model.NetworkDogInfo
 import kotlinx.coroutines.flow.Flow
 
 interface RemoteDogsDataSource {
-    suspend fun getDogs(page: Int, limit: Int): Flow<List<NetworkDogInfo>>
+    suspend fun getDogs(
+        page: Int,
+        limit: Int,
+    ): Flow<List<NetworkDogInfo>>
 }

@@ -21,14 +21,14 @@ data class DogInfo(
     val referenceImageId: String,
     val temperament: String? = null,
     val imperialWeight: String,
-    val metricWeight: String
+    val metricWeight: String,
 ) : Parcelable
 
 @Keep
 @Parcelize
 data class Height(
     val imperial: String,
-    val metric: String
+    val metric: String,
 ) : Parcelable
 
 @Keep
@@ -37,5 +37,5 @@ data class Weight(
     @SerialName("imperial")
     val imperial: String,
     @SerialName("metric")
-    val metric: String
+    val metric: String,
 ) : Parcelable

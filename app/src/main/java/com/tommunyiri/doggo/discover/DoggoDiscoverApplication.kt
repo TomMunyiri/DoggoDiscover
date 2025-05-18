@@ -16,7 +16,10 @@ class DoggoDiscoverApplication : Application() {
             androidLogger()
             androidContext(this@DoggoDiscoverApplication)
             modules(
-                AppModule.module, NetworkModule.module, HomeModule.module, DispatchersModule.module
+                AppModule.module,
+                NetworkModule.module,
+                HomeModule.module,
+                DispatchersModule.module,
             )
         }
     }

@@ -41,69 +41,73 @@ class DogRepositoryImplTest {
     }
 
     @Test
-    fun `getDogs returns mapped domain models from remote source`() = runTest {
-        // Given
-        val page = 0
-        val limit = 20
-        val remoteDogs = fakeNetworkDogList
-        val expectedDogs = fakeDogList
+    fun `getDogs returns mapped domain models from remote source`() =
+        runTest {
+            // Given
+            val page = 0
+            val limit = 20
+            val remoteDogs = fakeNetworkDogList
+            val expectedDogs = fakeDogList
 
-        coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(remoteDogs)
+            coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(remoteDogs)
 
-        // When
-        val result = repository.getDogs(page, limit).first()
+            // When
+            val result = repository.getDogs(page, limit).first()
 
-        // Then
-        assertEquals(expectedDogs, result)
-    }
-
-    @Test
-    fun `getDogs returns empty list when remote source returns empty`() = runTest {
-        // Given
-        val page = 0
-        val limit = 20
-        val remoteDogs = emptyList<NetworkDogInfo>()
-        val expectedDogs = emptyList<DogInfo>()
-
-        coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(remoteDogs)
-
-        // When
-        val result = repository.getDogs(page, limit).first()
-
-        // Then
-        assertEquals(expectedDogs, result)
-    }
+            // Then
+            assertEquals(expectedDogs, result)
+        }
 
     @Test
-    fun `getDogs passes correct pagination parameters to remote source`() = runTest {
-        // Given
-        val page = 2
-        val limit = 15
-        val remoteDogs = emptyList<NetworkDogInfo>()
+    fun `getDogs returns empty list when remote source returns empty`() =
+        runTest {
+            // Given
+            val page = 0
+            val limit = 20
+            val remoteDogs = emptyList<NetworkDogInfo>()
+            val expectedDogs = emptyList<DogInfo>()
 
-        coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(remoteDogs)
+            coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(remoteDogs)
 
-        // When
-        repository.getDogs(page, limit).first()
+            // When
+            val result = repository.getDogs(page, limit).first()
 
-        // Then
-        coVerify(exactly = 1) { remoteDataSource.getDogs(page, limit) }
-    }
+            // Then
+            assertEquals(expectedDogs, result)
+        }
 
     @Test
-    fun `getDogs maps all fields correctly from DTO to domain model`() = runTest {
-        // Given
-        val page = 0
-        val limit = 1
-        val remoteDto = fakeNetworkDogInfo
-        val expectedDog = fakeDogInfo
+    fun `getDogs passes correct pagination parameters to remote source`() =
+        runTest {
+            // Given
+            val page = 2
+            val limit = 15
+            val remoteDogs = emptyList<NetworkDogInfo>()
 
-        coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(listOf(remoteDto))
+            coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(remoteDogs)
 
-        // When
-        val result = repository.getDogs(page, limit).first()
+            // When
+            repository.getDogs(page, limit).first()
 
-        // Then
-        assertEquals(listOf(expectedDog), result)
-    }
+            // Then
+            coVerify(exactly = 1) { remoteDataSource.getDogs(page, limit) }
+        }
+
+    @Test
+    fun `getDogs maps all fields correctly from DTO to domain model`() =
+        runTest {
+            // Given
+            val page = 0
+            val limit = 1
+            val remoteDto = fakeNetworkDogInfo
+            val expectedDog = fakeDogInfo
+
+            coEvery { remoteDataSource.getDogs(page, limit) } returns flowOf(listOf(remoteDto))
+
+            // When
+            val result = repository.getDogs(page, limit).first()
+
+            // Then
+            assertEquals(listOf(expectedDog), result)
+        }
 }

@@ -14,52 +14,58 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-private val json = Json {
-    ignoreUnknownKeys = true
-    isLenient = true
-}
+private val json =
+    Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+    }
 
 object NetworkModule {
-    val module = module {
-        single {
-            val chuckerCollector = ChuckerCollector(
-                context = androidContext(),
-                showNotification = true,
-                retentionPeriod = RetentionManager.Period.ONE_HOUR
-            )
-
-            val chuckerInterceptor = ChuckerInterceptor.Builder(androidContext())
-                .collector(chuckerCollector)
-                .maxContentLength(250000L)
-                .redactHeaders(emptySet())
-                .alwaysReadResponseBody(false)
-                .build()
-
-            // Dog API authorization Interceptor
-            val authInterceptor = Interceptor { chain ->
-                val request = chain.request()
-                    .newBuilder()
-                    .addHeader("x-api-key", BuildConfig.DOG_API_KEY)
-                    .build()
-                chain.proceed(request)
-            }
-
-            OkHttpClient.Builder()
-                .addInterceptor(authInterceptor)
-                .addInterceptor(chuckerInterceptor)
-                .build()
-        }
-        single {
-            Retrofit.Builder()
-                .addConverterFactory(
-                    json.asConverterFactory(
-                        contentType = "application/json".toMediaType()
+    val module =
+        module {
+            single {
+                val chuckerCollector =
+                    ChuckerCollector(
+                        context = androidContext(),
+                        showNotification = true,
+                        retentionPeriod = RetentionManager.Period.ONE_HOUR,
                     )
-                )
-                .client(get())
-                .baseUrl(BuildConfig.DOG_API_BASE_URL)
-                .build()
+
+                val chuckerInterceptor =
+                    ChuckerInterceptor.Builder(androidContext())
+                        .collector(chuckerCollector)
+                        .maxContentLength(250000L)
+                        .redactHeaders(emptySet())
+                        .alwaysReadResponseBody(false)
+                        .build()
+
+                // Dog API authorization Interceptor
+                val authInterceptor =
+                    Interceptor { chain ->
+                        val request =
+                            chain.request()
+                                .newBuilder()
+                                .addHeader("x-api-key", BuildConfig.DOG_API_KEY)
+                                .build()
+                        chain.proceed(request)
+                    }
+
+                OkHttpClient.Builder()
+                    .addInterceptor(authInterceptor)
+                    .addInterceptor(chuckerInterceptor)
+                    .build()
+            }
+            single {
+                Retrofit.Builder()
+                    .addConverterFactory(
+                        json.asConverterFactory(
+                            contentType = "application/json".toMediaType(),
+                        ),
+                    )
+                    .client(get())
+                    .baseUrl(BuildConfig.DOG_API_BASE_URL)
+                    .build()
+            }
+            single { get<Retrofit>().create(DogApiService::class.java) }
         }
-        single { get<Retrofit>().create(DogApiService::class.java) }
-    }
 }

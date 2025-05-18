@@ -36,7 +36,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun `getDogs correctly updates ui state dogs list after getting dogs from get dogs use case`() =
+    fun `loadMoreDogs correctly updates ui state dogs list after getting dogs from get dogs use case`() =
         runTest {
             val dogs = listOf(fakeDogInfo)
 
@@ -44,7 +44,7 @@ class HomeViewModelTest {
             coEvery {
                 getDogsUseCase.invoke(
                     page = INITIAL_LIST_PAGE,
-                    limit = INITIAL_LIST_LIMIT
+                    limit = INITIAL_LIST_LIMIT,
                 )
             } returns flowOf(dogs)
 
@@ -53,7 +53,7 @@ class HomeViewModelTest {
             coVerify {
                 getDogsUseCase.invoke(
                     page = INITIAL_LIST_PAGE,
-                    limit = INITIAL_LIST_LIMIT
+                    limit = INITIAL_LIST_LIMIT,
                 )
             }
 

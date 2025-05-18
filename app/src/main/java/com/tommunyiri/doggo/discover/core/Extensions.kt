@@ -15,15 +15,16 @@ private val letsTryAgain = R.string.lets_try_again
 private val badRequest = R.string.bad_request
 
 fun Throwable.handleException(): Pair<Int, Any> {
-    val errorPair: Pair<Int, Any> = when {
-        this is ApiException -> somethingWentWrong to this.statusMessage
-        this is UnknownHostException -> networkProblem to pleaseCheckYourInternet
-        this is HttpException && this.code() == HttpStatusCodes.FORBIDDEN -> somethingWentWrong to notAuthorized
-        this is HttpException && this.code() in HttpStatusCodes.INTERNAL_SERVER_ERROR..599 -> somethingWentWrong to apiError
-        this is HttpException && this.code() == HttpStatusCodes.BAD_REQUEST -> somethingWentWrong to badRequest
-        this is SocketTimeoutException -> networkProblem to pleaseCheckYourInternet
-        else -> letsTryAgain to apiError
-    }
+    val errorPair: Pair<Int, Any> =
+        when {
+            this is ApiException -> somethingWentWrong to this.statusMessage
+            this is UnknownHostException -> networkProblem to pleaseCheckYourInternet
+            this is HttpException && this.code() == HttpStatusCodes.FORBIDDEN -> somethingWentWrong to notAuthorized
+            this is HttpException && this.code() in HttpStatusCodes.INTERNAL_SERVER_ERROR..599 -> somethingWentWrong to apiError
+            this is HttpException && this.code() == HttpStatusCodes.BAD_REQUEST -> somethingWentWrong to badRequest
+            this is SocketTimeoutException -> networkProblem to pleaseCheckYourInternet
+            else -> letsTryAgain to apiError
+        }
     return errorPair
 }
 

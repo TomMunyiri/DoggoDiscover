@@ -16,7 +16,7 @@ import com.tommunyiri.doggo.discover.presentation.screens.home.HomeScreen
 
 fun NavGraphBuilder.mainNavGraph(
     navController: NavHostController,
-    onThemeUpdated: () -> Unit
+    onThemeUpdated: () -> Unit,
 ) {
     navigation(
         startDestination = BottomNavItem.Home.path,
@@ -31,7 +31,7 @@ fun NavGraphBuilder.mainNavGraph(
                 onDogClick = { dogInfo ->
                     navController.currentBackStackEntry?.savedStateHandle?.set("dogInfo", dogInfo)
                     navController.navigate(NavDestinations.Main.DETAILS)
-                }
+                },
             )
         }
         composable(
@@ -47,7 +47,7 @@ fun NavGraphBuilder.mainNavGraph(
             exitTransition = { fadeOut() },
         ) {
             val dogInfo = navController.previousBackStackEntry?.savedStateHandle?.get<DogInfo>("dogInfo")
-            DogDetailsScreen(dogInfo = dogInfo,navController)
+            DogDetailsScreen(dogInfo = dogInfo, navController)
         }
     }
 }

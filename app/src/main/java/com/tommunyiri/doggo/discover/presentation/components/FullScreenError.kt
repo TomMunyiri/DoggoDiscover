@@ -17,11 +17,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FullScreenError(errorTitle: String, errorDesc: String, imageVector: ImageVector) {
+fun FullScreenError(
+    errorTitle: String,
+    errorDesc: String,
+    imageVector: ImageVector,
+) {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         Icon(
-            imageVector, contentDescription = errorTitle,
+            imageVector,
+            contentDescription = errorTitle,
             Modifier
                 .align(Alignment.CenterHorizontally),
         )
@@ -31,18 +36,18 @@ fun FullScreenError(errorTitle: String, errorDesc: String, imageVector: ImageVec
             fontWeight = FontWeight.SemiBold,
             text = errorTitle,
             modifier =
-            Modifier
-                .padding(top = 10.dp, start = 16.dp, end = 16.dp, bottom = 10.dp)
-                .align(Alignment.CenterHorizontally),
+                Modifier
+                    .padding(top = 10.dp, start = 16.dp, end = 16.dp, bottom = 10.dp)
+                    .align(Alignment.CenterHorizontally),
         )
         Text(
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge,
             text = errorDesc,
             modifier =
-            Modifier
-                .padding(top = 1.dp, start = 16.dp, end = 16.dp, bottom = 1.dp)
-                .align(Alignment.CenterHorizontally),
+                Modifier
+                    .padding(top = 1.dp, start = 16.dp, end = 16.dp, bottom = 1.dp)
+                    .align(Alignment.CenterHorizontally),
         )
         Spacer(modifier = Modifier.weight(1.0f))
     }

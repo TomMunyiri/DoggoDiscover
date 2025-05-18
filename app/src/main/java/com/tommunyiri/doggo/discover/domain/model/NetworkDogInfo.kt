@@ -30,7 +30,7 @@ data class NetworkDogInfo(
     @SerialName("temperament")
     val temperament: String? = null,
     @SerialName("weight")
-    val weight: NetworkWeight
+    val weight: NetworkWeight,
 )
 
 @Keep
@@ -39,7 +39,7 @@ data class NetworkHeight(
     @SerialName("imperial")
     val imperial: String,
     @SerialName("metric")
-    val metric: String
+    val metric: String,
 )
 
 @Keep
@@ -48,5 +48,5 @@ data class NetworkWeight(
     @SerialName("imperial")
     val imperial: String,
     @SerialName("metric")
-    val metric: String
+    val metric: String,
 )

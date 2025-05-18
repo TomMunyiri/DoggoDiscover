@@ -20,7 +20,7 @@ class DogInfoListMapper {
                 referenceImageId = it.referenceImageId,
                 temperament = it.temperament,
                 metricWeight = it.weight.metric,
-                imperialWeight = it.weight.imperial
+                imperialWeight = it.weight.imperial,
             )
         }
     }

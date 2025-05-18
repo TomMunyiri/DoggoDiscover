@@ -11,9 +11,12 @@ import kotlinx.coroutines.withContext
 
 class DogRepositoryImpl(
     private val remoteDogsDataSource: RemoteDogsDataSource,
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher,
 ) : DogRepository {
-    override suspend fun getDogs(page: Int, limit: Int): Flow<List<DogInfo>> =
+    override suspend fun getDogs(
+        page: Int,
+        limit: Int,
+    ): Flow<List<DogInfo>> =
         withContext(ioDispatcher) {
             val dogInfoListMapper = DogInfoListMapper()
             remoteDogsDataSource.getDogs(page, limit).map {

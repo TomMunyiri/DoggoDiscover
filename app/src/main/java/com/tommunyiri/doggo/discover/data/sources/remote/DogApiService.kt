@@ -9,6 +9,6 @@ interface DogApiService {
     @GET("breeds")
     suspend fun getDogs(
         @Query("page") page: Int,
-        @Query("limit") limit: Int
+        @Query("limit") limit: Int,
     ): Response<List<NetworkDogInfo>>
 }

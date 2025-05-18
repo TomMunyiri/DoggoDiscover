@@ -31,9 +31,7 @@ import com.tommunyiri.doggo.discover.presentation.components.LoadingIndicator
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(
-    onDogClick: (DogInfo) -> Unit = {}
-) {
+fun HomeScreen(onDogClick: (DogInfo) -> Unit = {}) {
     val homeViewModel: HomeViewModel = koinViewModel()
     val contentPadding = LocalMainContentPadding.current
     val homeScreenState by homeViewModel.homeScreenState.collectAsStateWithLifecycle()
@@ -48,10 +46,6 @@ fun HomeScreen(
     }
 
     val context = LocalContext.current
-
-    LaunchedEffect(Unit) {
-        homeViewModel.getDogs()
-    }
 
     // Load more items when user is close to the bottom
     LaunchedEffect(shouldLoadMore) {
@@ -77,12 +71,12 @@ fun HomeScreen(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding,
         horizontalArrangement = Arrangement.spacedBy(5.dp),
-        verticalArrangement = Arrangement.spacedBy(5.dp)
+        verticalArrangement = Arrangement.spacedBy(5.dp),
     ) {
         items(homeScreenState.dogsList) { dogInfo ->
             DogHomeCard(
                 dogInfo = dogInfo,
-                onDogClick = onDogClick
+                onDogClick = onDogClick,
             )
         }
 
@@ -90,7 +84,7 @@ fun HomeScreen(
             item(span = { GridItemSpan(GRID_ITEM_COUNT) }) {
                 Box(
                     modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                    contentAlignment = Alignment.Center,
                 ) {
                     LoadingIndicator()
                 }

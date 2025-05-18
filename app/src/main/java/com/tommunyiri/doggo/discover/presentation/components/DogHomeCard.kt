@@ -36,60 +36,64 @@ import com.tommunyiri.doggo.discover.domain.model.DogInfo
 fun DogHomeCard(
     dogInfo: DogInfo,
     modifier: Modifier = Modifier,
-    onDogClick: (DogInfo) -> Unit = {}
+    onDogClick: (DogInfo) -> Unit = {},
 ) {
     Card(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-            .clickable { onDogClick(dogInfo) }
-            .testTag("DogItemCard"),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .clickable { onDogClick(dogInfo) }
+                .testTag("DogItemCard"),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Box {
             val imageUrl = remember { mutableStateOf("${BuildConfig.DOG_IMAGE_URL}${dogInfo.referenceImageId}.jpg") }
-            
+
             AsyncImage(
                 model = imageUrl.value,
                 contentDescription = dogInfo.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .clip(RoundedCornerShape(16.dp)),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .clip(RoundedCornerShape(16.dp)),
                 contentScale = ContentScale.Crop,
                 onState = { state ->
                     if (state is AsyncImagePainter.State.Error && imageUrl.value.endsWith(".jpg")) {
                         imageUrl.value = "${BuildConfig.DOG_IMAGE_URL}${dogInfo.referenceImageId}.png"
                     }
-                }
+                },
             )
 
             Row(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
                     imageVector = AppIcons.Pet,
                     contentDescription = stringResource(R.string.pet_icon),
-                    tint = Color.White
+                    tint = Color.White,
                 )
                 Text(
                     modifier = Modifier.padding(start = 2.dp),
                     text = dogInfo.name,
                     color = Color.White,
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        shadow = Shadow(
-                            color = Color.Black.copy(alpha = 4f),
-                            offset = Offset(4f, 4f),
-                            blurRadius = 4f
-                        )
-                    )
+                    style =
+                        TextStyle(
+                            fontSize = 16.sp,
+                            shadow =
+                                Shadow(
+                                    color = Color.Black.copy(alpha = 4f),
+                                    offset = Offset(4f, 4f),
+                                    blurRadius = 4f,
+                                ),
+                        ),
                 )
-
             }
         }
     }
