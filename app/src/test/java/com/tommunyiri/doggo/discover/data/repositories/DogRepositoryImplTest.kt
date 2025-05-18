@@ -1,5 +1,6 @@
 package com.tommunyiri.doggo.discover.data.repositories
 
+import com.tommunyiri.doggo.discover.data.sources.local.LocalDBDataSource
 import com.tommunyiri.doggo.discover.data.sources.remote.RemoteDogsDataSource
 import com.tommunyiri.doggo.discover.domain.model.DogInfo
 import com.tommunyiri.doggo.discover.domain.model.NetworkDogInfo
@@ -26,13 +27,16 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class DogRepositoryImplTest {
     private val remoteDataSource = mockk<RemoteDogsDataSource>()
+    private val localDBDataSource = mockk<LocalDBDataSource>()
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var repository: DogRepositoryImpl
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        repository = DogRepositoryImpl(remoteDataSource, testDispatcher)
+        repository = DogRepositoryImpl(
+            remoteDataSource, testDispatcher, localDBDataSource
+        )
     }
 
     @After
