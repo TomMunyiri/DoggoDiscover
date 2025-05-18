@@ -11,7 +11,7 @@ class RemoteDogsDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher,
     private val dogsApiService: DogApiService,
 ) : RemoteDogsDataSource {
-    override suspend fun getDogs(
+    override fun getDogs(
         page: Int,
         limit: Int,
     ): Flow<List<NetworkDogInfo>> =

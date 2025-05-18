@@ -16,16 +16,15 @@ class DogRepositoryImpl(
     private val ioDispatcher: CoroutineDispatcher,
     private val localDBDataSource: LocalDBDataSource,
 ) : DogRepository {
-    override suspend fun getDogs(
+    override fun getDogs(
         page: Int,
         limit: Int,
-    ): Flow<List<DogInfo>> =
-        withContext(ioDispatcher) {
-            val dogInfoListMapper = DogInfoListMapper()
-            remoteDogsDataSource.getDogs(page, limit).map {
-                dogInfoListMapper.transformNetworkToDomain(it)
-            }
+    ): Flow<List<DogInfo>> {
+        val dogInfoListMapper = DogInfoListMapper()
+        return remoteDogsDataSource.getDogs(page, limit).map {
+            dogInfoListMapper.transformNetworkToDomain(it)
         }
+    }
 
     override suspend fun addFavorite(dogInfo: DogInfo) =
         withContext(ioDispatcher) {
