@@ -8,4 +8,8 @@ interface DogRepository {
         page: Int,
         limit: Int,
     ): Flow<List<DogInfo>>
+
+    suspend fun addFavorite(dogInfo: DogInfo)
+
+    fun isFavorite(id: String): Flow<Boolean>
 }

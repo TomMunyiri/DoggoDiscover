@@ -2,6 +2,7 @@ package com.tommunyiri.doggo.discover
 
 import android.app.Application
 import com.tommunyiri.doggo.discover.core.di.AppModule
+import com.tommunyiri.doggo.discover.core.di.DatabaseModule
 import com.tommunyiri.doggo.discover.core.di.DispatchersModule
 import com.tommunyiri.doggo.discover.core.di.HomeModule
 import com.tommunyiri.doggo.discover.core.di.NetworkModule
@@ -20,6 +21,7 @@ class DoggoDiscoverApplication : Application() {
                 NetworkModule.module,
                 HomeModule.module,
                 DispatchersModule.module,
+                DatabaseModule.module,
             )
         }
     }

@@ -27,6 +27,7 @@ object HomeModule {
                 DogRepositoryImpl(
                     remoteDogsDataSource = get(),
                     ioDispatcher = get(IoDispatcher),
+                    localDBDataSource = get(),
                 )
             }
             singleOf(::GetDogsUseCase)
