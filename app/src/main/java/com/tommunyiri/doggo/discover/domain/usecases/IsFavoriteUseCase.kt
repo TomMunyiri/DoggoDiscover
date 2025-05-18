@@ -4,5 +4,5 @@ import com.tommunyiri.doggo.discover.domain.repositories.DogRepository
 import kotlinx.coroutines.flow.Flow
 
 class IsFavoriteUseCase(private val dogRepository: DogRepository) {
-    fun invoke(id: String): Flow<Boolean> = dogRepository.isFavorite(id)
+    fun invoke(id: Int): Flow<Boolean> = dogRepository.isFavorite(id)
 }

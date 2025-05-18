@@ -1,10 +1,8 @@
 package com.tommunyiri.doggo.discover.core.di
 
 import com.tommunyiri.doggo.discover.core.di.scope.IoDispatcher
-import com.tommunyiri.doggo.discover.data.repositories.DogRepositoryImpl
 import com.tommunyiri.doggo.discover.data.sources.remote.RemoteDogsDataSource
 import com.tommunyiri.doggo.discover.data.sources.remote.RemoteDogsDataSourceImpl
-import com.tommunyiri.doggo.discover.domain.repositories.DogRepository
 import com.tommunyiri.doggo.discover.domain.usecases.GetDogsUseCase
 import com.tommunyiri.doggo.discover.presentation.screens.home.HomeViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,13 +21,6 @@ object HomeModule {
                 )
             }
             viewModelOf(::HomeViewModel)
-            single<DogRepository> {
-                DogRepositoryImpl(
-                    remoteDogsDataSource = get(),
-                    ioDispatcher = get(IoDispatcher),
-                    localDBDataSource = get(),
-                )
-            }
             singleOf(::GetDogsUseCase)
         }
 }

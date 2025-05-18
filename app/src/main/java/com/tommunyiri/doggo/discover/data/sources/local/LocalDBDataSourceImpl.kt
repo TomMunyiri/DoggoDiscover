@@ -15,5 +15,11 @@ class LocalDBDataSourceImpl(
             dogDao.addFavorite(dbDogInfo)
         }
 
-    override fun isFavorite(id: String): Flow<Boolean> = dogDao.isFavorite(id)
+    override fun isFavorite(id: Int): Flow<Boolean> = dogDao.isFavorite(id)
+
+    override suspend fun removeFavorite(id: Int) =
+        withContext(ioDispatcher) {
+            dogDao.removeFavorite(id)
+        }
+
 }

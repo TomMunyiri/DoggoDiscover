@@ -13,5 +13,8 @@ interface DogDao {
     suspend fun addFavorite(dbDogInfo: DBDogInfo)
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorites_table WHERE id = :id)")
-    fun isFavorite(id: String): Flow<Boolean>
+    fun isFavorite(id: Int): Flow<Boolean>
+
+    @Query("DELETE FROM favorites_table WHERE id = :id")
+    suspend fun removeFavorite(id: Int)
 }

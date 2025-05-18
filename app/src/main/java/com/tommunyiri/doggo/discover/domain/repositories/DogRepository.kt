@@ -11,5 +11,7 @@ interface DogRepository {
 
     suspend fun addFavorite(dogInfo: DogInfo)
 
-    fun isFavorite(id: String): Flow<Boolean>
+    fun isFavorite(id: Int): Flow<Boolean>
+
+    suspend fun removeFavorite(id: Int)
 }

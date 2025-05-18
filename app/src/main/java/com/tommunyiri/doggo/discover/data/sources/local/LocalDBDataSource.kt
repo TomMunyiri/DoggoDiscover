@@ -6,5 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface LocalDBDataSource {
     suspend fun addFavorite(dbDogInfo: DBDogInfo)
 
-    fun isFavorite(id: String): Flow<Boolean>
+    fun isFavorite(id: Int): Flow<Boolean>
+
+    suspend fun removeFavorite(id: Int)
 }

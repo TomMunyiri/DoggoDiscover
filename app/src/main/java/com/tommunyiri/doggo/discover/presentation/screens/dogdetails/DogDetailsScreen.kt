@@ -12,12 +12,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
@@ -34,40 +39,73 @@ import com.tommunyiri.doggo.discover.R
 import com.tommunyiri.doggo.discover.domain.model.DogInfo
 import com.tommunyiri.doggo.discover.presentation.components.AppIcons
 import com.tommunyiri.doggo.discover.presentation.components.TopAppBarComponent
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DogDetailsScreen(
     dogInfo: DogInfo?,
     navController: NavHostController,
 ) {
+    val dogDetailsViewModel: DogDetailsViewModel = koinViewModel()
+    val dogDetailsScreenState by dogDetailsViewModel.dogDetailsScreenState.collectAsStateWithLifecycle()
+    var isFavorite by remember { mutableStateOf(dogDetailsScreenState.isFavorite) }
+
+    LaunchedEffect(Unit) {
+        dogInfo?.let { dogInfo ->
+            dogDetailsViewModel.isFavorite(dogInfo.id)
+        }
+    }
+
+    dogDetailsScreenState.isFavorite?.let {
+        isFavorite = it
+    }
+
     Scaffold(topBar = {
         TopAppBarComponent(
             stringResource(R.string.dog_details),
             onBackButtonClick = { navController.navigateUp() },
+            actions = {
+                IconButton(onClick = {
+                    dogInfo?.let { dogInfo ->
+                        if (isFavorite == true) {
+                            dogDetailsViewModel.removeFavorite(dogInfo.id)
+                        } else {
+                            dogDetailsViewModel.addFavorite(dogInfo)
+                        }
+                    }
+                }) {
+                    Icon(
+                        if (isFavorite == true) AppIcons.Favorite else AppIcons.FavoriteOutlined,
+                        contentDescription = stringResource(R.string.nav_title_favorite),
+                    )
+                }
+            }
         )
     }) { paddingValues ->
         dogInfo?.let { dog ->
             Column(
                 modifier =
-                    Modifier
-                        .padding(paddingValues)
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState()),
+                Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState()),
             ) {
                 Box {
-                    val imageUrl = remember { mutableStateOf("${BuildConfig.DOG_IMAGE_URL}${dog.referenceImageId}.jpg") }
+                    val imageUrl =
+                        remember { mutableStateOf("${BuildConfig.DOG_IMAGE_URL}${dog.referenceImageId}.jpg") }
 
                     AsyncImage(
                         model = imageUrl.value,
                         contentDescription = dog.name,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .height(300.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .height(300.dp),
                         contentScale = ContentScale.Crop,
                         onState = { state ->
                             if (state is AsyncImagePainter.State.Error && imageUrl.value.endsWith(".jpg")) {
-                                imageUrl.value = "${BuildConfig.DOG_IMAGE_URL}${dog.referenceImageId}.png"
+                                imageUrl.value =
+                                    "${BuildConfig.DOG_IMAGE_URL}${dog.referenceImageId}.png"
                             }
                         },
                     )
@@ -75,11 +113,11 @@ fun DogDetailsScreen(
                     // Title overlay at the bottom of the image
                     Box(
                         modifier =
-                            Modifier
-                                .align(Alignment.BottomStart)
-                                .fillMaxWidth()
-                                .background(Color.Black.copy(alpha = 0.5f))
-                                .padding(16.dp),
+                        Modifier
+                            .align(Alignment.BottomStart)
+                            .fillMaxWidth()
+                            .background(Color.Black.copy(alpha = 0.5f))
+                            .padding(16.dp),
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -102,9 +140,9 @@ fun DogDetailsScreen(
 
                 Column(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                 ) {
                     InfoSection(
                         stringResource(R.string.weight),
@@ -160,9 +198,9 @@ private fun InfoSection(
 ) {
     Column(
         modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
     ) {
         Text(
             text = title,

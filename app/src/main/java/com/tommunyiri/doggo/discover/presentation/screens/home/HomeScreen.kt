@@ -31,7 +31,7 @@ import com.tommunyiri.doggo.discover.presentation.components.LoadingIndicator
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(onDogClick: (DogInfo) -> Unit = {}) {
+fun HomeScreen(onDogClick: (DogInfo) -> Unit) {
     val homeViewModel: HomeViewModel = koinViewModel()
     val contentPadding = LocalMainContentPadding.current
     val homeScreenState by homeViewModel.homeScreenState.collectAsStateWithLifecycle()

@@ -32,5 +32,10 @@ class DogRepositoryImpl(
             localDBDataSource.addFavorite(dogInfoMapper.transformDomainToDb(dogInfo))
         }
 
-    override fun isFavorite(id: String): Flow<Boolean> = localDBDataSource.isFavorite(id)
+    override fun isFavorite(id: Int): Flow<Boolean> = localDBDataSource.isFavorite(id)
+
+    override suspend fun removeFavorite(id: Int) =
+        withContext(ioDispatcher) {
+            localDBDataSource.removeFavorite(id)
+        }
 }
