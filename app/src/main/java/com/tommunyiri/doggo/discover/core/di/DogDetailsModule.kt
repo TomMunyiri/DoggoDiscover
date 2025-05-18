@@ -9,10 +9,11 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 
 object DogDetailsModule {
-    val module = module {
-        viewModelOf(::DogDetailsViewModel)
-        singleOf(::IsFavoriteUseCase)
-        singleOf(::AddFavoriteUseCase)
-        singleOf(::RemoveFavoriteUseCase)
-    }
+    val module =
+        module {
+            viewModelOf(::DogDetailsViewModel)
+            singleOf(::IsFavoriteUseCase)
+            singleOf(::AddFavoriteUseCase)
+            singleOf(::RemoveFavoriteUseCase)
+        }
 }

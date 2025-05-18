@@ -25,4 +25,6 @@
     <string name="lets_try_again">Let’s try again</string>
     <string name="bad_request">Bad request. Please try again later</string>
     <string name="loading_text">LOADING…</string>
+    <string name="no_favorites_title">Favorites will appear here</string>
+    <string name="no_favorites_desc">To favorite, open an item and click on the favorite icon</string>
 </resources>

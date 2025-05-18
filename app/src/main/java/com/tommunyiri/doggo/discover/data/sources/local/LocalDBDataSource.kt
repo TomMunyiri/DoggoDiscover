@@ -9,4 +9,6 @@ interface LocalDBDataSource {
     fun isFavorite(id: Int): Flow<Boolean>
 
     suspend fun removeFavorite(id: Int)
+
+    fun getFavorites(): Flow<List<DBDogInfo>>
 }

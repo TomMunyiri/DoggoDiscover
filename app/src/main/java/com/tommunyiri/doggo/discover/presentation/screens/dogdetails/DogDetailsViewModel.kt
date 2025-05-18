@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 class DogDetailsViewModel(
     private val isFavoriteUseCase: IsFavoriteUseCase,
     private val addFavoriteUseCase: AddFavoriteUseCase,
-    private val removeFavoriteUseCase: RemoveFavoriteUseCase
+    private val removeFavoriteUseCase: RemoveFavoriteUseCase,
 ) : ViewModel() {
     private val _dogDetailsScreenState = MutableStateFlow(DogDetailsScreenUIState())
     val dogDetailsScreenState: StateFlow<DogDetailsScreenUIState> =
@@ -53,10 +53,9 @@ class DogDetailsViewModel(
     }
 }
 
-
 data class DogDetailsScreenUIState(
     val error: Error? = null,
-    val isFavorite: Boolean? = null
+    val isFavorite: Boolean? = null,
 )
 
 data class Error(val errorTitle: Int, val errorMessage: Any)

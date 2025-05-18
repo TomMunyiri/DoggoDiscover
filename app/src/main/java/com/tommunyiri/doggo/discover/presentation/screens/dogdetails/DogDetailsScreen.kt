@@ -79,16 +79,16 @@ fun DogDetailsScreen(
                         contentDescription = stringResource(R.string.nav_title_favorite),
                     )
                 }
-            }
+            },
         )
     }) { paddingValues ->
         dogInfo?.let { dog ->
             Column(
                 modifier =
-                Modifier
-                    .padding(paddingValues)
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
+                    Modifier
+                        .padding(paddingValues)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
             ) {
                 Box {
                     val imageUrl =
@@ -98,9 +98,9 @@ fun DogDetailsScreen(
                         model = imageUrl.value,
                         contentDescription = dog.name,
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(300.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .height(300.dp),
                         contentScale = ContentScale.Crop,
                         onState = { state ->
                             if (state is AsyncImagePainter.State.Error && imageUrl.value.endsWith(".jpg")) {
@@ -113,11 +113,11 @@ fun DogDetailsScreen(
                     // Title overlay at the bottom of the image
                     Box(
                         modifier =
-                        Modifier
-                            .align(Alignment.BottomStart)
-                            .fillMaxWidth()
-                            .background(Color.Black.copy(alpha = 0.5f))
-                            .padding(16.dp),
+                            Modifier
+                                .align(Alignment.BottomStart)
+                                .fillMaxWidth()
+                                .background(Color.Black.copy(alpha = 0.5f))
+                                .padding(16.dp),
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -140,9 +140,9 @@ fun DogDetailsScreen(
 
                 Column(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                 ) {
                     InfoSection(
                         stringResource(R.string.weight),
@@ -198,9 +198,9 @@ private fun InfoSection(
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
     ) {
         Text(
             text = title,

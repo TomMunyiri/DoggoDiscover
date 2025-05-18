@@ -17,4 +17,7 @@ interface DogDao {
 
     @Query("DELETE FROM favorites_table WHERE id = :id")
     suspend fun removeFavorite(id: Int)
+
+    @Query("SELECT * FROM favorites_table")
+    fun getFavorites(): Flow<List<DBDogInfo>>
 }

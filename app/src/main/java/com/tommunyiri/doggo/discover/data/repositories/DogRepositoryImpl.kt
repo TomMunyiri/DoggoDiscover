@@ -38,4 +38,11 @@ class DogRepositoryImpl(
         withContext(ioDispatcher) {
             localDBDataSource.removeFavorite(id)
         }
+
+    override fun getFavorites(): Flow<List<DogInfo>> {
+        val dogInfoListMapper = DogInfoListMapper()
+        return localDBDataSource.getFavorites().map { dbDogInfoList ->
+            dogInfoListMapper.transformDbToDomain(dbDogInfoList)
+        }
+    }
 }

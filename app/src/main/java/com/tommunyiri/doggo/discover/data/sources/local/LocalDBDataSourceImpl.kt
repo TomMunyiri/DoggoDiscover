@@ -22,4 +22,5 @@ class LocalDBDataSourceImpl(
             dogDao.removeFavorite(id)
         }
 
+    override fun getFavorites(): Flow<List<DBDogInfo>> = dogDao.getFavorites()
 }

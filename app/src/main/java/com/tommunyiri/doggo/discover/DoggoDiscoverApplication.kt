@@ -25,7 +25,7 @@ class DoggoDiscoverApplication : Application() {
                 DispatchersModule.module,
                 DatabaseModule.module,
                 FavoriteModule.module,
-                DogDetailsModule.module
+                DogDetailsModule.module,
             )
         }
     }

@@ -39,7 +39,12 @@ fun NavGraphBuilder.mainNavGraph(
             enterTransition = { slideInHorizontally() },
             exitTransition = { fadeOut() },
         ) {
-            FavoritesScreen()
+            FavoritesScreen(
+                onDogClick = { dogInfo ->
+                    navController.currentBackStackEntry?.savedStateHandle?.set("dogInfo", dogInfo)
+                    navController.navigate(NavDestinations.Main.DETAILS)
+                },
+            )
         }
         composable(
             NavDestinations.Main.DETAILS,
