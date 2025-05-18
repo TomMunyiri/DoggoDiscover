@@ -24,4 +24,5 @@
     <string name="check_internet">Please connect to an active internet connection and try again</string>
     <string name="lets_try_again">Let’s try again</string>
     <string name="bad_request">Bad request. Please try again later</string>
+    <string name="loading_text">LOADING…</string>
 </resources>
