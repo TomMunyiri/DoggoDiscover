@@ -5,8 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.tommunyiri.doggo.discover.core.INITIAL_LIST_LIMIT
 import com.tommunyiri.doggo.discover.core.INITIAL_LIST_PAGE
 import com.tommunyiri.doggo.discover.core.handleException
-import com.tommunyiri.doggo.discover.core.utils.Result
-import com.tommunyiri.doggo.discover.core.utils.asResult
 import com.tommunyiri.doggo.discover.domain.model.DogInfo
 import com.tommunyiri.doggo.discover.domain.usecases.GetDogsUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -42,9 +40,9 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
 
         val isFirstLoad = !loadMore
         if (isFirstLoad) {
-            _homeScreenState.update { it.copy(isLoading = true) }
+            _homeScreenState.update { it.copy(isLoading = true, error = null) }
         } else {
-            _homeScreenState.update { it.copy(isLoadingMore = true) }
+            _homeScreenState.update { it.copy(isLoadingMore = true, error = null) }
         }
 
         viewModelScope.launch(exceptionHandler) {
@@ -52,32 +50,16 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
                 if (isFirstLoad) INITIAL_LIST_PAGE else homeScreenState.value.currentPage + 1
             val limit = INITIAL_LIST_LIMIT
 
-            getDogsUseCase.invoke(page = page, limit = limit).asResult().collect { result ->
-                when (result) {
-                    is Result.Success -> {
-                        val newDogs = result.data
-                        _homeScreenState.update { currentState ->
-                            currentState.copy(
-                                dogsList = if (isFirstLoad) newDogs else currentState.dogsList + newDogs,
-                                isLoading = false,
-                                isLoadingMore = false,
-                                error = null,
-                                currentPage = page,
-                                canLoadMore = newDogs.size >= limit,
-                            )
-                        }
-                    }
-
-                    is Result.Error -> {
-                        val (title, message) = result.error.handleException()
-                        _homeScreenState.update {
-                            it.copy(
-                                isLoading = false,
-                                isLoadingMore = false,
-                                error = Error(title, message),
-                            )
-                        }
-                    }
+            getDogsUseCase.invoke(page = page, limit = limit).collect { newDogs ->
+                _homeScreenState.update { currentState ->
+                    currentState.copy(
+                        dogsList = if (isFirstLoad) newDogs else currentState.dogsList.plus(newDogs),
+                        isLoading = false,
+                        isLoadingMore = false,
+                        error = null,
+                        currentPage = page,
+                        canLoadMore = newDogs.size >= limit,
+                    )
                 }
             }
         }

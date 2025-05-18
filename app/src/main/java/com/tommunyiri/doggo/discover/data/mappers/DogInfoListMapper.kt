@@ -4,7 +4,7 @@ import com.tommunyiri.doggo.discover.domain.model.DogInfo
 import com.tommunyiri.doggo.discover.domain.model.NetworkDogInfo
 
 class DogInfoListMapper {
-    fun transformToDomain(networkDogInfo: List<NetworkDogInfo>): List<DogInfo> {
+    fun transformNetworkToDomain(networkDogInfo: List<NetworkDogInfo>): List<DogInfo> {
         return networkDogInfo.map {
             DogInfo(
                 bredFor = it.bredFor,

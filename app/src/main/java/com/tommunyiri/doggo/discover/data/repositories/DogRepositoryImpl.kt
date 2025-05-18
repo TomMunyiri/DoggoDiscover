@@ -20,7 +20,7 @@ class DogRepositoryImpl(
         withContext(ioDispatcher) {
             val dogInfoListMapper = DogInfoListMapper()
             remoteDogsDataSource.getDogs(page, limit).map {
-                dogInfoListMapper.transformToDomain(it)
+                dogInfoListMapper.transformNetworkToDomain(it)
             }
         }
 }
