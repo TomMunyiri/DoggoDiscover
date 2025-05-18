@@ -34,9 +34,10 @@ class DogRepositoryImplTest {
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        repository = DogRepositoryImpl(
-            remoteDataSource, testDispatcher, localDBDataSource
-        )
+        repository =
+            DogRepositoryImpl(
+                remoteDataSource, testDispatcher, localDBDataSource,
+            )
     }
 
     @After

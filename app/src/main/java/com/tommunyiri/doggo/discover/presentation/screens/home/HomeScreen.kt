@@ -90,22 +90,5 @@ fun HomeScreen(onDogClick: (DogInfo) -> Unit) {
                 }
             }
         }
-
-        homeScreenState.error?.let { error ->
-            item(span = { GridItemSpan(GRID_ITEM_COUNT) }) {
-                val message = error.errorMessage.anyToString(context = context)
-                val title = stringResource(error.errorTitle)
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    FullScreenError(
-                        errorTitle = title,
-                        errorDesc = message,
-                        imageVector = AppIcons.Error,
-                    )
-                }
-            }
-        }
     }
 }
