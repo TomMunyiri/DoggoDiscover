@@ -43,7 +43,7 @@ The architecture of this application relies and complies with the following poin
 - [X] Lottie for loading animations
 - [X] Pagination for the dog list
 - [X] Navigation between screens using Jetpack compose navigation with smooth transition animations
-- [X] Some unit tests for ViewModels, Use Cases, and Repository layers.
+- [X] Some unit tests for Composables, ViewModels, Use Cases, and Repository layers.
 - [X] Error handling using CoroutineExceptionHandler and Throwable extensions to handle network failures
 
 
