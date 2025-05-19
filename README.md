@@ -1,6 +1,8 @@
 # DoggoDiscover
-
 An Android dog application implemented using the MVVM Clean Architecture pattern, Retrofit, Koin, Coil, Kotlin Flows, ViewModel, Coroutines, Room, Jetpack Compose, Kotlin DSL and some other libraries from the [Android Jetpack](https://developer.android.com/jetpack) . Doggo Discover fetches data from the [Dog API](https://developers.thecatapi.com/) to provide dog information.
+
+## Downloadable apk:
+Download apk [here](https://drive.google.com/file/d/1IIE44LzNzhMVVbAVhTTG1YXYYCeaYcTM/view?usp=drive_link) 
 
 ## Architecture
 The architecture of this application relies and complies with the following points below:
@@ -10,7 +12,6 @@ The architecture of this application relies and complies with the following poin
 <p align="center"><a><img src="media/mvvm_clean_architecture.jpg" alt="clean_architecture_image"></a></p>
 
 ## Technologies used:
-
 * [Jetpack Compose](https://developer.android.com/jetpack/compose) - A modern toolkit for building native Android UI in a declarative way.
 * [Gradle Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html) - An alternative syntax for writing Gradle build scripts using Kotlin.
 * [Version Catalogs](https://developer.android.com/build/migrate-to-catalogs) - A scalable way of maintaining dependencies and plugins in a multi-module project.

@@ -1,11 +1,8 @@
 package com.tommunyiri.doggo.discover.domain.model
 
 import android.os.Parcelable
-import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.SerialName
 
-@Keep
 @Parcelize
 data class DogInfo(
     val bredFor: String? = null,
@@ -24,18 +21,14 @@ data class DogInfo(
     val metricWeight: String,
 ) : Parcelable
 
-@Keep
 @Parcelize
 data class Height(
     val imperial: String,
     val metric: String,
 ) : Parcelable
 
-@Keep
 @Parcelize
 data class Weight(
-    @SerialName("imperial")
     val imperial: String,
-    @SerialName("metric")
     val metric: String,
 ) : Parcelable
