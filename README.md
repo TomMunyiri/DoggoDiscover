@@ -57,6 +57,12 @@ DOG_API_BASE_URL="https://api.thedogapi.com/v1/"
 DOG_IMAGE_URL="https://cdn2.thedogapi.com/images/"
 
 ````
+
+## Screenshots
+<img src="media/loading_animation.jpg"  width="250"/> <img src="media/home_dog_list.jpg"  width="250"/> <img src="media/dog_list_pagination.jpg"  width="250"/>
+<img src="media/dog_details_favorite.jpg"  width="250"/> <img src="media/dog_details_not_favorite.jpg"  width="250"/> <img src="media/favorite_dog_list.jpg"  width="250"/>
+<img src="media/splash_screen.jpg"  width="250"/> <img src="media/network_error.jpg"  width="250"/> <img src="media/no_favorites.jpg"  width="250"/>
+
 ## Credits
 
 * [Icon Kitchen](https://icon.kitchen/) was used to generate the launcher icon.
