@@ -30,7 +30,21 @@ The architecture of this application relies and complies with the following poin
 * [Chucker](https://github.com/ChuckerTeam/chucker) - An HTTP inspector for Android & OkHTTP (like Charles but on device).
 
 ## Features
-- [ ] :TO BE UPDATED
+- [X] A composable list of dogs fetched from TheDogAPI.
+- [X] A details screen showing more information about a selected dog.
+- [X] A way to toggle favorites (⭐) for each dog.
+- [X] Separation into layers (Data, Domain, Presentation) with clear responsibilities.
+- [X] ViewModels to manage UI state.
+- [X] Fetch data using Retrofit with Kotlin Coroutines (no blocking calls).
+- [X] Store favorites locally using Room.
+- [X] Koin for dependency injection
+- [X] Coil for image loading
+- [X] Lottie for loading animations
+- [X] Pagination for the dog list
+- [X] Navigation between screens using Jetpack compose navigation with smooth transition animations
+- [X] Some unit tests for ViewModels, Use Cases, and Repository layers.
+- [X] Error handling using CoroutineExceptionHandler and Throwable extensions to handle network failures
+
 
 ## Installation
 Doggo Discover requires a minimum API level of 24. Clone the repository. You will need an API key i.e. `DOG_API_KEY` from [Dog API](https://developers.thecatapi.com/) to request data. If you don’t already have an account, you will need to create one in order to request an API Key.
@@ -51,7 +65,7 @@ DOG_IMAGE_URL="https://cdn2.thedogapi.com/images/"
 ```
 MIT License
 
-Copyright (c) 2024 Tom Munyiri
+Copyright (c) 2025 Tom Munyiri
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
