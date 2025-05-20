@@ -1,5 +1,6 @@
 package com.tommunyiri.doggo.discover.presentation.screens.home
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tommunyiri.doggo.discover.core.INITIAL_LIST_LIMIT
@@ -33,6 +34,7 @@ class HomeViewModel(private val getDogsUseCase: GetDogsUseCase) : ViewModel() {
         getDogs()
     }
 
+    @VisibleForTesting
     fun getDogs(loadMore: Boolean = false) {
         if (loadMore && (!homeScreenState.value.canLoadMore || homeScreenState.value.isLoadingMore)) {
             return
